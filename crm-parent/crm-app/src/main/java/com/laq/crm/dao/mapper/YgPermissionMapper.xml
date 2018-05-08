@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laq.crm.dao.YgPermissionDao">
+    <resultMap id="BaseResultMap" type="com.laq.crm.model.YgPermission">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="module_id" property="moduleId" jdbcType="INTEGER"/>
+        <result column="acl_value" property="aclValue" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, role_id, module_id, acl_value, create_date, update_date
+  </sql>
+    <sql id="whereClause">
+        where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="roleId != null">
+            and role_id = #{roleId,jdbcType=INTEGER}
+        </if>
+        <if test="moduleId != null">
+            and module_id = #{moduleId,jdbcType=INTEGER}
+        </if>
+        <if test="aclValue != null">
+            and acl_value = #{aclValue,jdbcType=VARCHAR}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate,jdbcType=TIMESTAMP}
+        </if>
+    </sql>
+    <sql id="sort">
+        <if test="orderByStr != null">
+            order by ${orderByStr}
+        </if>
+    </sql>
+    <sql id="lock">
+        <if test="lock != null and lock == true">
+            for update
+        </if>
+    </sql>
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from t_permission
+        <include refid="whereClause"/>
+    </select>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        <include refid="whereClause"/>
+        <include refid="sort"/>
+        <include refid="lock"/>
+    </select>
+    <select id="find" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        <include refid="whereClause"/>
+        <include refid="sort"/>
+        <include refid="lock"/>
+    </select>
+    <insert id="save" parameterType="com.laq.crm.model.YgPermission" useGeneratedKeys="true" keyProperty="id">
+    insert into t_permission (role_id, module_id, acl_value, 
+      create_date, update_date)
+    values (#{roleId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, #{aclValue,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="saveSte" parameterType="com.laq.crm.model.YgPermission" useGeneratedKeys="true" keyProperty="id">
+        insert into t_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="moduleId != null">
+                module_id,
+            </if>
+            <if test="aclValue != null">
+                acl_value,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="moduleId != null">
+                #{moduleId,jdbcType=INTEGER},
+            </if>
+            <if test="aclValue != null">
+                #{aclValue,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateSte" parameterType="com.laq.crm.model.YgPermission">
+        update t_permission
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="moduleId != null">
+                module_id = #{moduleId,jdbcType=INTEGER},
+            </if>
+            <if test="aclValue != null">
+                acl_value = #{aclValue,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.laq.crm.model.YgPermission">
+    update t_permission
+    set role_id = #{roleId,jdbcType=INTEGER},
+      module_id = #{moduleId,jdbcType=INTEGER},
+      acl_value = #{aclValue,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

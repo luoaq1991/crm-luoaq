@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laq.crm.dao.YgCustomerOrderDao">
+    <resultMap id="BaseResultMap" type="com.laq.crm.model.YgCustomerOrder">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="cus_id" property="cusId" jdbcType="INTEGER"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="order_date" property="orderDate" jdbcType="TIMESTAMP"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="is_valid" property="isValid" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, cus_id, order_no, order_date, address, state, create_date, update_date, is_valid
+  </sql>
+    <sql id="whereClause">
+        where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="cusId != null">
+            and cus_id = #{cusId,jdbcType=INTEGER}
+        </if>
+        <if test="orderNo != null">
+            and order_no = #{orderNo,jdbcType=VARCHAR}
+        </if>
+        <if test="orderDate != null">
+            and order_date = #{orderDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="address != null">
+            and address = #{address,jdbcType=VARCHAR}
+        </if>
+        <if test="state != null">
+            and state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="isValid != null">
+            and is_valid = #{isValid,jdbcType=INTEGER}
+        </if>
+    </sql>
+    <sql id="sort">
+        <if test="orderByStr != null">
+            order by ${orderByStr}
+        </if>
+    </sql>
+    <sql id="lock">
+        <if test="lock != null and lock == true">
+            for update
+        </if>
+    </sql>
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_customer_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_customer_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from t_customer_order
+        <include refid="whereClause"/>
+    </select>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_customer_order
+        <include refid="whereClause"/>
+        <include refid="sort"/>
+        <include refid="lock"/>
+    </select>
+    <select id="find" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_customer_order
+        <include refid="whereClause"/>
+        <include refid="sort"/>
+        <include refid="lock"/>
+    </select>
+    <insert id="save" parameterType="com.laq.crm.model.YgCustomerOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into t_customer_order (cus_id, order_no, order_date, 
+      address, state, create_date, 
+      update_date, is_valid)
+    values (#{cusId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}, 
+      #{address,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{isValid,jdbcType=INTEGER})
+  </insert>
+    <insert id="saveSte" parameterType="com.laq.crm.model.YgCustomerOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into t_customer_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cusId != null">
+                cus_id,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="orderDate != null">
+                order_date,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cusId != null">
+                #{cusId,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDate != null">
+                #{orderDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isValid != null">
+                #{isValid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateSte" parameterType="com.laq.crm.model.YgCustomerOrder">
+        update t_customer_order
+        <set>
+            <if test="cusId != null">
+                cus_id = #{cusId,jdbcType=INTEGER},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDate != null">
+                order_date = #{orderDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.laq.crm.model.YgCustomerOrder">
+    update t_customer_order
+    set cus_id = #{cusId,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      order_date = #{orderDate,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      is_valid = #{isValid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="queryOrdersByCid" parameterType="int" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_customer_order where cus_id = #{cid}
+    </select>
+
+    <select id="queryCustomerOrderByOrderId" parameterType="int" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_customer_order where id = #{orderId}
+    </select>
+
+</mapper>

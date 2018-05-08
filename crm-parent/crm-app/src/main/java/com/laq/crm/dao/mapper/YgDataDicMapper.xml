@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laq.crm.dao.YgDataDicDao">
+    <resultMap id="BaseResultMap" type="com.laq.crm.model.YgDataDic">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="data_dic_name" property="dataDicName" jdbcType="VARCHAR"/>
+        <result column="data_dic_value" property="dataDicValue" jdbcType="VARCHAR"/>
+        <result column="is_valid" property="isValid" jdbcType="TINYINT"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, data_dic_name, data_dic_value, is_valid, create_date, update_date
+  </sql>
+    <sql id="whereClause">
+        where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="dataDicName != null">
+            and data_dic_name = #{dataDicName,jdbcType=VARCHAR}
+        </if>
+        <if test="dataDicValue != null">
+            and data_dic_value = #{dataDicValue,jdbcType=VARCHAR}
+        </if>
+        <if test="isValid != null">
+            and is_valid = #{isValid,jdbcType=TINYINT}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate,jdbcType=TIMESTAMP}
+        </if>
+    </sql>
+    <sql id="sort">
+        <if test="orderByStr != null">
+            order by ${orderByStr}
+        </if>
+    </sql>
+    <sql id="lock">
+        <if test="lock != null and lock == true">
+            for update
+        </if>
+    </sql>
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_datadic
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="delete" parameterType="java.lang.Integer">
+    delete from t_datadic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from t_datadic
+        <include refid="whereClause"/>
+    </select>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_datadic
+        <include refid="whereClause"/>
+        <include refid="sort"/>
+        <include refid="lock"/>
+    </select>
+    <select id="find" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_datadic
+        <include refid="whereClause"/>
+        <include refid="sort"/>
+        <include refid="lock"/>
+    </select>
+    <insert id="save" parameterType="com.laq.crm.model.YgDataDic" useGeneratedKeys="true" keyProperty="id">
+    insert into t_datadic (data_dic_name, data_dic_value, is_valid, 
+      create_date, update_date)
+    values (#{dataDicName,jdbcType=VARCHAR}, #{dataDicValue,jdbcType=VARCHAR}, #{isValid,jdbcType=TINYINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="saveSte" parameterType="com.laq.crm.model.YgDataDic" useGeneratedKeys="true" keyProperty="id">
+        insert into t_datadic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dataDicName != null">
+                data_dic_name,
+            </if>
+            <if test="dataDicValue != null">
+                data_dic_value,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dataDicName != null">
+                #{dataDicName,jdbcType=VARCHAR},
+            </if>
+            <if test="dataDicValue != null">
+                #{dataDicValue,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null">
+                #{isValid,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateSte" parameterType="com.laq.crm.model.YgDataDic">
+        update t_datadic
+        <set>
+            <if test="dataDicName != null">
+                data_dic_name = #{dataDicName,jdbcType=VARCHAR},
+            </if>
+            <if test="dataDicValue != null">
+                data_dic_value = #{dataDicValue,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="com.laq.crm.model.YgDataDic">
+    update t_datadic
+    set data_dic_name = #{dataDicName,jdbcType=VARCHAR},
+      data_dic_value = #{dataDicValue,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=TINYINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="queryDataDicValueByDataDicName" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+          td.data_dic_value
+        FROM
+          t_datadic td
+        WHERE
+          td.data_dic_name = #{dicName}
+        AND td.is_valid = 1
+    </select>
+
+</mapper>
