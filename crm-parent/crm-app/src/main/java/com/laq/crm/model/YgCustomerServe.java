@@ -1,5 +1,9 @@
 package com.laq.crm.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.laq.framework.constant.CrmConstant;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class YgCustomerServe extends BaseModel {
@@ -55,6 +59,8 @@ public class YgCustomerServe extends BaseModel {
      * assign_time
      * 分配时间
      */
+    @DateTimeFormat(pattern = CrmConstant.DATE_FORMATE_YMDHMS)
+    @JsonFormat(pattern = CrmConstant.DATE_FORMATE_YMDHMS, timezone = "GMT+8")
     private Date assignTime;
 
     /**
@@ -94,12 +100,16 @@ public class YgCustomerServe extends BaseModel {
      * update_date
      * 更新时间
      */
+    @DateTimeFormat(pattern = CrmConstant.DATE_FORMATE_YMDHMS)
+    @JsonFormat(pattern = CrmConstant.DATE_FORMATE_YMDHMS, timezone = "GMT+8")
     private Date updateDate;
 
     /**
      * create_date
      * 创建时间
      */
+    @DateTimeFormat(pattern = CrmConstant.DATE_FORMATE_YMDHMS)
+    @JsonFormat(pattern = CrmConstant.DATE_FORMATE_YMDHMS, timezone = "GMT+8")
     private Date createDate;
 
     public Integer getId() {

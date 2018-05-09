@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laq.crm.dao.YgReportDao">
+    <resultMap id="BaseResultMap" type="com.laq.crm.model.YgReport">
+        <!--主键-->
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name"/>
+        <result column="total" property="total" jdbcType="INTEGER"/>
+        <result column="level" property="level"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryCustomersContribution" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+          c.`name` as 'name', SUM(IFNULL(od.sum, 0)) AS 'total'
+        FROM
+	      t_customer c
+        LEFT JOIN t_customer_order co ON c.id = co.cus_id
+        LEFT JOIN t_order_details od ON co.id = od.order_id
+    </select>
+
+
+</mapper>

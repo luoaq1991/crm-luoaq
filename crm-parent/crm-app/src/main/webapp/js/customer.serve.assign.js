@@ -19,8 +19,10 @@ function addCustomerServeAssign() {
     $("#fm").form("submit", {
         url: ctx + "/server/update",
         onSubmit: function (params) {
+            //本段,设置state为2
             params.state = "2";
             //params.serviceProcePeople = $.cookie("trueName");
+            //return $("#fm").form("validate")为提交表单内的数据验证
             return $("#fm").form("validate");
         },
         success: function (data) {

@@ -33,3 +33,7 @@ function addCustomerServeServiceProceed() {
         }
     });
 }
+
+function closeCustomerServeDialog() {
+    closeDlg("dlg");
+}
